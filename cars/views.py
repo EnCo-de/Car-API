@@ -16,6 +16,8 @@ class CarAPIView(APIView):
     
     def post(self, request):
         print(request.data)
+        serializer = CarSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
         new_car = Car.objects.create(
             category_id=request.data['category_id'],
             manufacturer_id=request.data['manufacturer_id'],

@@ -5,9 +5,9 @@ class CarSerializer(serializers.Serializer):
     category_id =      serializers.IntegerField()
     manufacturer_id =  serializers.IntegerField()
     model_name =    serializers.CharField(max_length=100)
-    description =    serializers.CharField()
-    time_created =  serializers.DateTimeField()
-    time_updated =  serializers.DateTimeField()
+    description =    serializers.CharField(required=False)
+    time_created =  serializers.DateTimeField(read_only=True)
+    time_updated =  serializers.DateTimeField(read_only=True)
     is_displayed =  serializers.BooleanField(default=True)
 
     
