@@ -7,10 +7,24 @@
 </head>
 <body>
 	<h1>Cars API URL endpoints</h1>
-	<a href="api/v1.0/car/">
+	<a href="{% url 'car_list' %}">
 		<h2>CarList</h2> 
 		<p>"GET /api/v1.0/car/ HTTP/1.1"</p>
 	</a>
 	<p>Show all car info</p>
+    <hr>
+    <a href="{% url 'car_api' %}">
+		<h2>CarAPIView</h2> 
+		<p>"GET /api/v1.1/car/ HTTP/1.1"</p>
+        <p>POST /api/v1.1/car/ JSON example <br>
+        <code>{
+            "category_id": 1,
+            "manufacturer_id": 1,
+            "model_name": "Fiesta",
+            "description": "The Ford Fiesta is a supermini car."
+        }</code></p>
+	</a>
+	<p>Show all car info</p>
+
 </body>
 </html>

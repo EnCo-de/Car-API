@@ -11,10 +11,11 @@ class Car(models.Model):
     category =      models.ForeignKey('Category', on_delete=models.PROTECT, null=True)
     manufacturer =  models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
     model_name =    models.CharField(max_length=100)
-    descripion =    models.TextField(blank=True)
+    description =    models.TextField(blank=True)
     time_created =  models.DateTimeField(auto_now_add=True)
     time_updated =  models.DateTimeField(auto_now=True)
-    
+    is_displayed =  models.BooleanField(default=True)
+
     def __str__(self) -> str:
         return self.model_name
 
