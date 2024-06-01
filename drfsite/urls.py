@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1.0/car/', CarList.as_view(), name='car_list'),
     path('api/v1.1/car/', CarAPIView.as_view(), name='car_api'),
+    path('api/v1.1/car/<int:pk>/', CarAPIView.as_view(), name='car_update'),
     path('', links, name='links'),
 ]

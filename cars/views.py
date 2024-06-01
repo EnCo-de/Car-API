@@ -15,11 +15,11 @@ class CarAPIView(APIView):
         return Response({'posts': CarSerializer(qs, many=True).data})
     
     def post(self, request):
-        print(request.data)
+        print(request.method, request.data)
         serializer = CarSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response({'posts': serializer.data})
+        return Response({'post': serializer.data})
 
         # new_car = Car.objects.create(
         #     category_id=request.data['category_id'],
@@ -27,7 +27,23 @@ class CarAPIView(APIView):
         #     model_name=request.data['model_name'],
         #     description=request.data.get('description', '')
         # )
-        # return Response({'posts': CarSerializer(new_car).data})
+        # return Response({'post': CarSerializer(new_car).data})
+
+    def put(self, request, *args, **kwargs):
+        print(request.method, request.data)
+        if not 'pk' in kwargs:
+            return Response({'error': 'Method PUT not allowed'})
+        try:
+            pk = kwargs['pk']
+            instance = Car.objects.get(pk=pk)
+        except Car.DoesNotExist:
+            return Response({'error': 'Object does not exist'})
+        serializer = CarSerializer(data=request.data, instance=instance)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({'put': serializer.data})
+
+
 
 
 class CarList(generics.ListAPIView):
