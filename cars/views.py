@@ -43,6 +43,18 @@ class CarAPIView(APIView):
         serializer.save()
         return Response({'put': serializer.data})
 
+    def delete(self, request, *args, **kwargs):
+        print(request.method, request.data)
+        if not 'pk' in kwargs:
+            return Response({'error': 'Method DELETE is not allowed without item number'})
+        try:
+            pk = kwargs['pk']
+            number, deleted = Car.objects.get(pk=pk).delete()
+            print('\t', pk, number, deleted)
+        except Car.DoesNotExist:
+            return Response({'error': 'Object does not exist'})
+        return Response({'delete': {'pk': pk, 'number': number, 'items': deleted}})
+
 
 
 
