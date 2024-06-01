@@ -18,13 +18,16 @@ class CarAPIView(APIView):
         print(request.data)
         serializer = CarSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        new_car = Car.objects.create(
-            category_id=request.data['category_id'],
-            manufacturer_id=request.data['manufacturer_id'],
-            model_name=request.data['model_name'],
-            description=request.data.get('description', '')
-        )
-        return Response({'posts': CarSerializer(new_car).data})
+        serializer.save()
+        return Response({'posts': serializer.data})
+
+        # new_car = Car.objects.create(
+        #     category_id=request.data['category_id'],
+        #     manufacturer_id=request.data['manufacturer_id'],
+        #     model_name=request.data['model_name'],
+        #     description=request.data.get('description', '')
+        # )
+        # return Response({'posts': CarSerializer(new_car).data})
 
 
 class CarList(generics.ListAPIView):

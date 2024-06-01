@@ -10,6 +10,9 @@ class CarSerializer(serializers.Serializer):
     time_updated =  serializers.DateTimeField(read_only=True)
     is_displayed =  serializers.BooleanField(default=True)
 
+    def create(self, validated_data):
+        return Car.objects.create(**validated_data)
+
     
 class CarModelSerializer(serializers.ModelSerializer):
     class Meta:
