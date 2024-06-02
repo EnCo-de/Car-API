@@ -15,8 +15,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from cars.views import links, CarList, CarAPIView, CarViewSet
+from django.urls import include, path
+from cars.views import links, CarList, CarAPIView, CarViewSet, CarGetOnlyViewSet
+from rest_framework import routers
+
+simple_router = routers.SimpleRouter()
+simple_router.register(r'car', CarViewSet)
+second_router = routers.SimpleRouter()
+second_router.register(r'car-data', CarGetOnlyViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,7 +30,9 @@ urlpatterns = [
     path('api/v1.2/car/<int:pk>/', CarList.as_view(), name='car_post'),
     path('api/v1.1/car/', CarAPIView.as_view(), name='car_api'),
     path('api/v1.1/car/<int:pk>/', CarAPIView.as_view(), name='car_update'),
-    path('api/v1.5/car/', CarViewSet.as_view({'get': 'list'}), name='car_get'),
-    path('api/v1.5/car/<int:pk>/', CarViewSet.as_view({'put': 'update'}), name='car_put'),
+    path('api/v1.5/', include(simple_router.urls)),
+    # path('api/v1.5/car/', CarViewSet.as_view({'get': 'list'}), name='car_get'),
+    # path('api/v1.5/car/<int:pk>/', CarViewSet.as_view({'put': 'update'}), name='car_put'),
+    path('api/v1.7/', include(second_router.urls)),
     path('', links, name='links'),
 ]

@@ -11,6 +11,11 @@ class CarViewSet(viewsets.ModelViewSet):
     serializer_class = CarSerializer
 
 
+class CarGetOnlyViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Car.objects.all()
+    serializer_class = CarSerializer
+
+
 class CarAPIView(APIView):
     '''
     Uses rest_framework.views.APIView class with rest_framework.serializers.Serializer

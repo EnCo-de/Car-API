@@ -26,12 +26,21 @@
 	</a>
 	<p>Show all car info</p>
     <hr>
-    <a href="{% url 'car_get' %}">
+    <a href="/api/v1.5/car/">
 		<h2>CarViewSet</h2> 
 		<p>"GET /api/v1.5/car/ HTTP/1.1"</p>
         <p>"PUT /api/v1.5/car/&lt;int&gt;" JSON example</p>
 	</a>
 	<p>Uses a ViewSet</p>
+    <hr>
+    <a href="/api/v1.7/car-data/">
+		<h2>Read-Only CarViewSet</h2> 
+		<p>"GET /api/v1.7/car-data/ HTTP/1.1"</p>
+	</a>
+    <a href="/api/v1.7/car-data/1/">
+		<p>"GET /api/v1.7/car-data/&lt;index&gt; HTTP/1.1"</p>
+	</a>
+	<p>Can't modify any data</p>
 
 </body>
 </html>
