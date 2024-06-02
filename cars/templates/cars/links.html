@@ -9,7 +9,7 @@
 	<h1>Cars API URL endpoints</h1>
 	<a href="{% url 'car_list' %}">
 		<h2>CarList</h2> 
-		<p>"GET /api/v1.0/car/ HTTP/1.1"</p>
+		<p>"GET POST  /api/v1.2/car/ HTTP/1.1"</p>
 	</a>
 	<p>Show all car info</p>
     <hr>
@@ -25,6 +25,13 @@
         }</code></p>
 	</a>
 	<p>Show all car info</p>
+    <hr>
+    <a href="{% url 'car_get' %}">
+		<h2>CarViewSet</h2> 
+		<p>"GET /api/v1.5/car/ HTTP/1.1"</p>
+        <p>"PUT /api/v1.5/car/&lt;int&gt;" JSON example</p>
+	</a>
+	<p>Uses a ViewSet</p>
 
 </body>
 </html>

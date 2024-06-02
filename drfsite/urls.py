@@ -16,12 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from cars.views import links, CarList, CarAPIView
+from cars.views import links, CarList, CarAPIView, CarViewSet
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1.0/car/', CarList.as_view(), name='car_list'),
+    path('api/v1.2/car/', CarList.as_view(), name='car_list'),
+    path('api/v1.2/car/<int:pk>/', CarList.as_view(), name='car_post'),
     path('api/v1.1/car/', CarAPIView.as_view(), name='car_api'),
     path('api/v1.1/car/<int:pk>/', CarAPIView.as_view(), name='car_update'),
+    path('api/v1.5/car/', CarViewSet.as_view({'get': 'list'}), name='car_get'),
+    path('api/v1.5/car/<int:pk>/', CarViewSet.as_view({'put': 'update'}), name='car_put'),
     path('', links, name='links'),
 ]

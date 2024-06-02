@@ -1,10 +1,15 @@
 from django.shortcuts import render
-from rest_framework import generics
+from rest_framework import generics, viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from .models import Car
 from .serializers import CarSerializer, CarModelSerializer
+
+class CarViewSet(viewsets.ModelViewSet):
+    queryset = Car.objects.all()
+    serializer_class = CarSerializer
+
 
 class CarAPIView(APIView):
     '''
@@ -56,9 +61,7 @@ class CarAPIView(APIView):
         return Response({'delete': {'pk': pk, 'number': number, 'items': deleted}})
 
 
-
-
-class CarList(generics.ListAPIView):
+class CarList(generics.ListCreateAPIView):
     '''
     Show all car info
     '''
