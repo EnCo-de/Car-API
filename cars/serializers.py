@@ -11,6 +11,8 @@ class CarSerializer(serializers.Serializer):
     time_updated =  serializers.DateTimeField(read_only=True)
     is_displayed =  serializers.BooleanField(default=True)
 
+    owner = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
     def create(self, validated_data):
         return Car.objects.create(**validated_data)
     
@@ -28,7 +30,10 @@ class CarSerializer(serializers.Serializer):
 
     
 class CarModelSerializer(serializers.ModelSerializer):
+    owner = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    # The field 'owner' was declared on serializer CarModelSerializer, but has not been included in the 'fields' option.
+
     class Meta:
         model = Car
-        # fields = "__all__"
-        fields = ('id', 'model_name', 'manufacturer', 'category', 'description', 'is_displayed')
+        fields = "__all__"
+        # fields = ('id', 'model_name', 'manufacturer', 'category', 'description', 'is_displayed')

@@ -7,12 +7,6 @@
 </head>
 <body>
 	<h1>Cars API URL endpoints</h1>
-	<a href="{% url 'car_list' %}">
-		<h2>CarList</h2> 
-		<p>"GET POST  /api/v1.2/car/ HTTP/1.1"</p>
-	</a>
-	<p>Show all car info</p>
-    <hr>
     <a href="{% url 'car_api' %}">
 		<h2>CarAPIView</h2> 
 		<p>"GET /api/v1.1/car/ HTTP/1.1"</p>
@@ -48,6 +42,20 @@
 		<p>"GET /api/v1.7/car-data/&lt;index&gt; HTTP/1.1"</p>
 	</a>
 	<p>Can't modify any data</p>
+<br><hr><br><hr><br>
+    <a href="{% url 'car_list' %}">
+        <h2>CarList</h2> 
+        <p>"GET /api/v1.2/car/ HTTP/1.1"</p>
+        <p>Login Permission to "POST /api/v1.2/car/ HTTP/1.1"</p>
+    </a>
+    <p>Show all car info generics.ListCreateAPIView</p>
+    <hr>
 
+    <a href="{% url 'car_update_perms' pk=1 %}">
+        <p>"GET, PUT, PATCH {% url 'car_update_perms' pk=1 %} HTTP/1.1"</p>
+    </a>
+    <a href="{% url 'car_delete_perms' pk=11 %}">
+        <p>"DELETE {% url 'car_delete_perms' pk=11 %} HTTP/1.1"</p>
+    </a>
 </body>
 </html>

@@ -3,13 +3,16 @@ from rest_framework import generics, viewsets
 from rest_framework.views import APIView
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticatedOrReadOnly
 
 from .models import Car, Category
 from .serializers import CarSerializer, CarModelSerializer
+from .permissions import IsOwnerOrReadOnly
 
 class CarViewSet(viewsets.ModelViewSet):
     # queryset = Car.objects.all()
     serializer_class = CarSerializer
+    permission_classes = (AllowAny,)
 
     def get_queryset(self):
         if 'pk' in self.kwargs:
@@ -93,6 +96,21 @@ class CarList(generics.ListCreateAPIView):
     '''
     queryset = Car.objects.all()
     serializer_class = CarModelSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly, )
+
+
+class CarUpdate(generics.RetrieveUpdateAPIView):
+    '''Permission required to update car info'''
+    queryset = Car.objects.all()
+    serializer_class = CarModelSerializer
+    permission_classes = (IsOwnerOrReadOnly, )
+
+
+class CarDestroy(generics.DestroyAPIView):
+    '''Only Admin can delete cars'''
+    queryset = Car.objects.all()
+    # serializer_class = CarModelSerializer
+    permission_classes = (IsAdminUser, )
 
 
 def links(request):

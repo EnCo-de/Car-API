@@ -17,14 +17,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from cars.views import links, CarList, CarAPIView, CarViewSet, CarGetOnlyViewSet
+from cars.views import CarUpdate, CarDestroy
 from rest_framework import routers
 
 simple_router = routers.DefaultRouter()
 simple_router.register(r'car', CarViewSet, basename='default-car')
 second_router = routers.SimpleRouter()
 second_router.register(r'car-data', CarGetOnlyViewSet)
-for e in simple_router.urls:
-    print(e)
+# for e in simple_router.urls:
+#     print(e)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1.2/car/', CarList.as_view(), name='car_list'),
@@ -35,5 +37,7 @@ urlpatterns = [
     # path('api/v1.5/car/', CarViewSet.as_view({'get': 'list'}), name='car_get'),
     # path('api/v1.5/car/<int:pk>/', CarViewSet.as_view({'put': 'update'}), name='car_put'),
     path('api/v1.7/', include(second_router.urls)),
+    path('api/v1.8/car/<int:pk>/', CarUpdate.as_view(), name='car_update_perms'),
+    path('api/v1.8/cardelete/<int:pk>/', CarDestroy.as_view(), name='car_delete_perms'),
     path('', links, name='links'),
 ]
