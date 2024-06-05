@@ -26,12 +26,19 @@
 	</a>
 	<p>Show all car info</p>
     <hr>
-    <a href="/api/v1.5/car/">
+    <a href="{% url 'default-car-list' %}">
 		<h2>CarViewSet</h2> 
 		<p>"GET /api/v1.5/car/ HTTP/1.1"</p>
+		<p>"GET /api/v1.5/car/&lt;int&gt; HTTP/1.1"</p>
         <p>"PUT /api/v1.5/car/&lt;int&gt;" JSON example</p>
 	</a>
-	<p>Uses a ViewSet</p>
+	<p>Uses a ViewSet to show 3 recently added cars</p>
+    <a href="{% url 'default-car-categories' %}">
+		<p>"GET /api/v1.5/car/categories/ HTTP/1.1"</p></a>
+        <p>Display all car categories</p>
+    <a href="{% url 'default-car-category' pk=1 %}">
+        <p>"GET /api/v1.5/car/1/category/ HTTP/1.1"</p></a>
+        <p>Display a particular car's category</p>
     <hr>
     <a href="/api/v1.7/car-data/">
 		<h2>Read-Only CarViewSet</h2> 

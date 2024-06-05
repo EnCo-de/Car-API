@@ -19,11 +19,12 @@ from django.urls import include, path
 from cars.views import links, CarList, CarAPIView, CarViewSet, CarGetOnlyViewSet
 from rest_framework import routers
 
-simple_router = routers.SimpleRouter()
-simple_router.register(r'car', CarViewSet)
+simple_router = routers.DefaultRouter()
+simple_router.register(r'car', CarViewSet, basename='default-car')
 second_router = routers.SimpleRouter()
 second_router.register(r'car-data', CarGetOnlyViewSet)
-
+for e in simple_router.urls:
+    print(e)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1.2/car/', CarList.as_view(), name='car_list'),

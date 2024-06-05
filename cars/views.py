@@ -1,14 +1,35 @@
 from django.shortcuts import render
 from rest_framework import generics, viewsets
 from rest_framework.views import APIView
+from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from .models import Car
+from .models import Car, Category
 from .serializers import CarSerializer, CarModelSerializer
 
 class CarViewSet(viewsets.ModelViewSet):
-    queryset = Car.objects.all()
+    # queryset = Car.objects.all()
     serializer_class = CarSerializer
+
+    def get_queryset(self):
+        if 'pk' in self.kwargs:
+            return Car.objects.filter(pk=self.kwargs.get('pk'))
+        return Car.objects.order_by('-id')[:3]
+    
+    @action(methods=['get'], detail=False)
+    def categories(self, request):
+        categories = Category.objects.all()
+        return Response({'categories': [{'title': c.title, 'definition': c.definition} for c in categories]})
+    
+    @action(methods=['get'], detail=True)
+    def category(self, request, pk=None):
+        js = {'error': '400 Bad request'}
+        if pk is not None:
+            category = Category.objects.filter(car__id=pk)
+            if category.exists():
+                js = {'categories': {'title': category[0].title, 'definition': category[0].definition}}
+        return Response(js)
+
 
 
 class CarGetOnlyViewSet(viewsets.ReadOnlyModelViewSet):
