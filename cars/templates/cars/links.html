@@ -57,5 +57,14 @@
     <a href="{% url 'car_delete_perms' pk=11 %}">
         <p>"DELETE {% url 'car_delete_perms' pk=11 %} HTTP/1.1"</p>
     </a>
+
+
+    <hr>
+    <h2>CarToken TokenAuthentication required</h2> 
+
+    <a href="{% url 'car_token_auth' pk=1 %}">
+        <p>The token authentication provided by Django REST framework<br>
+            RetrieveAPIView GET {% url 'car_token_auth' pk=1 %} HTTP/1.1"</p>
+    </a>
 </body>
 </html>

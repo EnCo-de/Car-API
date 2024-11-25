@@ -4,6 +4,8 @@ from rest_framework.views import APIView
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticatedOrReadOnly
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 from .models import Car, Category
 from .serializers import CarSerializer, CarModelSerializer
@@ -106,6 +108,32 @@ class CarUpdate(generics.RetrieveUpdateAPIView):
     permission_classes = (IsOwnerOrReadOnly, )
 
 
+class CarToken(generics.RetrieveAPIView):
+    """ 
+    TokenAuthentication required to fetch car info
+
+    If successfully authenticated, TokenAuthentication provides the following credentials.
+    - `request.user` will be a Django User instance.
+    - `request.auth` will be a `rest_framework.authtoken.models.Token` instance.
+
+    set the authentication scheme on a per-view or per-viewset basis, using the APIView class-based views.
+    """
+    queryset = Car.objects.all()
+    serializer_class = CarModelSerializer
+    authentication_classes = (TokenAuthentication, )
+    permission_classes = (IsAuthenticated, )
+
+
+class CarJWToken(generics.RetrieveAPIView):
+    """ 
+    Simple JWT Token Authentication
+    """
+    queryset = Car.objects.all()
+    serializer_class = CarModelSerializer
+    # authentication_classes = (TokenAuthentication, )
+    permission_classes = (IsAuthenticated, )
+
+
 class CarDestroy(generics.DestroyAPIView):
     '''Only Admin can delete cars'''
     queryset = Car.objects.all()
@@ -115,3 +143,13 @@ class CarDestroy(generics.DestroyAPIView):
 
 def links(request):
     return render(request, 'cars/links.html')
+
+
+""" 
+If successfully authenticated, TokenAuthentication provides the following credentials.
+
+- `request.user` will be a Django User instance.
+- `request.auth` will be a `rest_framework.authtoken.models.Token` instance.
+"""
+
+# set the authentication scheme on a per-view or per-viewset basis, using the APIView class-based views.
