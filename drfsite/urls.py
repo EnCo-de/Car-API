@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from cars.views import links, CarList, CarAPIView, CarViewSet, CarGetOnlyViewSet
-from cars.views import CarUpdate, CarDestroy, CarToken, CarJWToken
+from cars.views import CarUpdate, CarDestroy, CarToken, CarJWToken, CarCategoryList
 from rest_framework import routers
 from rest_framework.authtoken import views
 from rest_framework_simplejwt.views import (
@@ -47,7 +47,8 @@ urlpatterns = [
     path('api/v1.8/cardelete/<int:pk>/', CarDestroy.as_view(), name='car_delete_perms'),
     # The token authentication provided by Django REST framework
     path('api/v1.12/car/<int:pk>/', CarToken.as_view(), name='car_token_auth'),
-    path('api/v1.14/car/<int:pk>/', CarJWToken.as_view(), name='car_token_auth'),
+    path('api/v1.14/car/<int:pk>/', CarJWToken.as_view(), name='car_jwt_auth'),
+    path('api/v1.15/car_categories/', CarCategoryList.as_view(), name='car_categories'),
     path('', links, name='links'),
     
     # uses Django's default session backend for authentication

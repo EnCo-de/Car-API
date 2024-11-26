@@ -66,5 +66,19 @@
         <p>The token authentication provided by Django REST framework<br>
             RetrieveAPIView GET {% url 'car_token_auth' pk=1 %} HTTP/1.1"</p>
     </a>
+    <hr>
+    <h2>JWT Authentication required</h2> 
+
+    <a href="{% url 'car_jwt_auth' pk=7 %}">
+        <p>JWT JSON Web Token authentication<br>
+            RetrieveAPIView GET {% url 'car_jwt_auth' pk=7 %} HTTP/1.1"</p>
+    </a>
+    <hr>
+    <h2>Page Number Pagination</h2> 
+
+    <a href="{% url 'car_categories' %}">
+        <p>Show all car categories<br>
+            generics.ListCreateAPIView GET {% url 'car_categories' %} HTTP/1.1"</p>
+    </a>
 </body>
 </html>

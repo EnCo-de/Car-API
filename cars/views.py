@@ -8,8 +8,10 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 from .models import Car, Category
-from .serializers import CarSerializer, CarModelSerializer
+from .serializers import CarSerializer, CarModelSerializer, CarCategorySerializer
 from .permissions import IsOwnerOrReadOnly
+from .pagination import CarResultsSetPagination
+
 
 class CarViewSet(viewsets.ModelViewSet):
     # queryset = Car.objects.all()
@@ -34,7 +36,6 @@ class CarViewSet(viewsets.ModelViewSet):
             if category.exists():
                 js = {'categories': {'title': category[0].title, 'definition': category[0].definition}}
         return Response(js)
-
 
 
 class CarGetOnlyViewSet(viewsets.ReadOnlyModelViewSet):
@@ -90,6 +91,15 @@ class CarAPIView(APIView):
         except Car.DoesNotExist:
             return Response({'error': 'Object does not exist'})
         return Response({'delete': {'pk': pk, 'number': number, 'items': deleted}})
+
+
+class CarCategoryList(generics.ListCreateAPIView):
+    '''
+    Show all car categories
+    '''
+    queryset = Category.objects.all()
+    serializer_class = CarCategorySerializer
+    pagination_class = CarResultsSetPagination
 
 
 class CarList(generics.ListCreateAPIView):
