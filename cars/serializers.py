@@ -28,18 +28,33 @@ class CarSerializer(serializers.Serializer):
         return instance
     
 
-    
-class CarModelSerializer(serializers.ModelSerializer):
-    owner = serializers.HiddenField(default=serializers.CurrentUserDefault())
-    # The field 'owner' was declared on serializer CarModelSerializer, but has not been included in the 'fields' option.
 
-    class Meta:
-        model = Car
-        fields = "__all__"
-        # fields = ('id', 'model_name', 'manufacturer', 'category', 'description', 'is_displayed')
-
-    
 class CarCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = "__all__"
+        fields = ('id', 'title', 'definition')
+
+
+class CarManufacturerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Manufacturer
+        fields = ('id', 'brand', )
+
+
+class CarModelSerializer(serializers.ModelSerializer):
+    owner = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    # The field 'owner' was declared on serializer CarModelSerializer, but has not been included in the 'fields' option.
+    # manufacturer = CarManufacturerSerializer()
+    # category = CarCategorySerializer()
+    category = serializers.SlugRelatedField(
+        many=False,
+        read_only=True,
+        slug_field='title',
+        )
+    manufacturer = serializers.StringRelatedField(many=False)
+
+
+    class Meta:
+        model = Car
+        # fields = "__all__"
+        fields = ('id', 'owner', 'model_name', 'manufacturer', 'category', 'description', 'is_displayed')
